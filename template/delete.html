@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Category</title>
+</head>
+<body>
+
+    <h1>Select a Category to Delete</h1>
+
+    <form method="POST" action="">
+        {% csrf_token %} 
+        
+        <label for="category-select">Choose a category:</label>
+        
+        <select name="category_id" id="category-select" required>
+            <option value="">-- Please choose a category --</option>
+            
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+            
+        </select>
+        
+        <button type="submit" style="color: red;">Delete Category</button>
+    </form>
+
+</body>
+</html>
