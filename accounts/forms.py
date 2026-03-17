@@ -1,13 +1,12 @@
 from django import forms
-from .models import User,Books
+from .models import User,Category
 
 class Userform(forms.ModelForm):
     class Meta:
         model=User
         fields='__all__'
 
-class Bookform(forms.ModelForm):
+class Categoryform(forms.ModelForm):
     class Meta:
-        model=Books
-        fields='__all__'
-
+        model=Category
+        fields=['name','description']

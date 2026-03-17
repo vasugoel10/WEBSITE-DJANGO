@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Category</title>
+</head>
+<body>
+<form method="POST" id="CategoryForm">
+    {% csrf_token %}
+    <input type="hidden" name="form_type" value="form1">
+
+    <select name="category_id" onchange="document.getElementById('CategoryForm').submit();">
+
+        <option value="">Select Category</option>
+
+        {% for category in data %}
+        <option value="{{ category.id }}">
+            {{ category.name }}
+        </option>
+        {% endfor %}
+
+    </select>
+
+</form>
+
+
+{% if selected_category %}
+
+<hr>
+
+<h3>Edit Category</h3>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="form_type" value="update">
+    <input type="hidden" name="category_id" value="{{ selected_category.id }}">
+
+    Name:
+    <input type="text" name="name" value="{{ selected_category.name }}">
+    <br><br>
+    Description:
+    <textarea name="description">{{ selected_category.description }}</textarea>
+    <br><br>
+    <button type="submit">Update</button>
+
+</form>
+
+{% endif %}
+
+</body>
+</html>
