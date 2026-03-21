@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Management</title>
+</head>
+<body>
+    <h1>Add a New Product</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Product</button>
+    </form>
+
+    <hr>
+
+    <h1>READ Product and Edit it </h1>
+    <table border="1">
+        <tr>
+            <td>Product name</td>
+            <td>Product Category</td>
+            <td>Price</td>
+            <td>Stock</td>
+            <td>Action</td>
+        </tr>
+      {% for item in product %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.category }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.stock }}</td>
+            <td>
+                <a href="{% url 'edit_product' item.id %}">Edit</a> | 
+                
+                <a href="{% url 'delete_product' item.id %}" style="color: red;">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+</body>
+</html>

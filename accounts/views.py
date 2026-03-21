@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
-from .forms import Userform,Categoryform
-from .models import User,Category
+from .forms import Userform,Categoryform,Productform
+from .models import User,Category,Product
 # Create your views here.
 def user_view(request):
     if request.method=="POST":
@@ -20,7 +20,6 @@ def category_view(request):
     else:
         form=Categoryform()
     return render(request,'category.html',{'form':form})
-
 def update_category(request):
     categories = Category.objects.all()
     selected_category = None
@@ -59,3 +58,32 @@ def delete_category(request):
     context = {'categories': categories}
     
     return render(request, 'delete.html', context)
+def product(request):
+    if request.method == "POST":
+        form = Productform(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('product_page')
+    else:
+        form = Productform()
+    all_products = Product.objects.all()
+    return render(request, "products.html", {'form': form, 'product': all_products})
+
+def edit_product(request, pk):
+    product_instance = get_object_or_404(Product, pk=pk)
+
+    if request.method == "POST":
+        form = Productform(request.POST, instance=product_instance)
+        if form.is_valid():
+            form.save()
+            return redirect('product_page') 
+    else:
+
+        form = Productform(instance=product_instance)
+    return render(request, "edit_product.html", {'form': form, 'product_instance': product_instance})
+def delete_product(request, pk):
+    product_instance = get_object_or_404(Product, pk=pk)
+    if request.method == "POST":
+        product_instance.delete()     
+        return redirect('product_page')
+    return render(request, "delete_product.html", {'product_instance': product_instance})
