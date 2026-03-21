@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Product</title>
+</head>
+<body>
+    <h1>Editing: {{ product_instance.name }}</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <button type="submit">Save Changes</button>
+        
+        <a href="{% url 'product_page' %}">Cancel</a>
+    </form>
+</body>
+</html>
