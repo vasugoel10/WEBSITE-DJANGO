@@ -13,3 +13,10 @@ class Category(models.Model):
     
     def __str__(self):
         return self.name
+class Product(models.Model):
+    name=models.CharField(max_length=200)
+    category=models.ForeignKey(Category,on_delete=models.CASCADE,related_name='products')
+    price=models.IntegerField(null=False)
+    stock=models.IntegerField(default=0,null=False)
+    def __str__(self):
+        return self.name
